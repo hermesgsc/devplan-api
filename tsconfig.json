@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES2021",            // versão do JS que será gerada
-    "module": "CommonJS",          // sistema de módulos
-    "rootDir": "src",              // onde estão os arquivos TS
-    "outDir": "dist",              // onde o JS compilado vai
-    "strict": true,                // ativa verificações mais rígidas
-    "esModuleInterop": true,       // compatibilidade com import/export
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "outDir": "dist",
+    "rootDir": ".",
+    "strict": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": ["src"]
+  "include": ["src", "prisma"]
 }
