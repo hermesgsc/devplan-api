@@ -7,69 +7,70 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  USER
-  ADMIN
-}
-
 model User {
-  id           String           @id @default(uuid())
-  name         String?
-  email        String           @unique
-  password     String
-  role         Role             @default(USER)
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
+  id            String         @id @default(uuid())
+  name          String?
+  email         String         @unique
+  password      String
+  role          Role           @default(USER)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   refreshTokens RefreshToken[]
-  progress     UserProgress[]
+  progress      UserProgress[]
 }
 
 model Track {
-  id          String    @id @default(uuid())
+  id          String   @id @default(uuid())
   title       String
   description String?
+  createdAt   DateTime @default(now())
   modules     Module[]
-  createdAt   DateTime  @default(now())
 }
 
 model Module {
-  id        String   @id @default(uuid())
-  title     String
-  order     Int
-  track     Track    @relation(fields: [trackId], references: [id])
-  trackId   String
-  videos    Video[]
+  id      String  @id @default(uuid())
+  title   String
+  order   Int
+  trackId String
+  track   Track   @relation(fields: [trackId], references: [id])
+  videos  Video[]
 }
 
 model Video {
-  id        String   @id @default(uuid())
-  title     String
-  url       String
-  order     Int
-  duration  Int?
-  module    Module   @relation(fields: [moduleId], references: [id])
-  moduleId  String
-  progress  UserProgress[]
+  id       String         @id @default(uuid())
+  title    String
+  url      String
+  order    Int
+  duration Int?
+  moduleId String
+  progress UserProgress[]
+  module   Module         @relation(fields: [moduleId], references: [id])
 }
 
 model UserProgress {
-  id        String   @id @default(uuid())
-  user      User     @relation(fields: [userId], references: [id])
+  id        String    @id @default(uuid())
   userId    String
-  video     Video    @relation(fields: [videoId], references: [id])
   videoId   String
-  watched   Boolean  @default(false)
+  watched   Boolean   @default(false)
   watchedAt DateTime?
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime  @updatedAt
+  user      User      @relation(fields: [userId], references: [id])
+  video     Video     @relation(fields: [videoId], references: [id])
+
   @@unique([userId, videoId])
 }
 
 model RefreshToken {
   id        String   @id @default(uuid())
   token     String   @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade,   onUpdate: Cascade)
   userId    String
   revoked   Boolean  @default(false)
   expiresAt DateTime
   createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  USER
+  ADMIN
 }
