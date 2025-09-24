@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { verifyToken } from "../services/jwt";
+import { verifyToken } from "../services/jwt.js";
 
 /**
  * Middleware para autenticar usuário via JWT
