@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { prisma } from "../prisma";
+import { prisma } from "../prisma.js";
 import argon2 from "argon2";
-import { signAccessToken, signRefreshToken, verifyToken } from "../services/jwt";
+import { signAccessToken, signRefreshToken, verifyToken } from "../services/jwt.js";
 
 // REGISTER
 export const register = async (req: Request, res: Response) => {
